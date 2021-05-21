@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  gluster01:
+    image: gfs-deb
+    labels:
+      docker.glusterfs: fs
+    privileged: true
+    ports:
+      - 24007:24007
+      - 24008:24008
+      - 49152:49152
+      - 49153:49154
+    volumes:
+      - type: bind
+        source: ./hosts
+        target: /etc/hosts
+        read_only: true
+    networks:
+      docker:
+        ipv4_address: 172.16.1.201
+  gluster02:
+    image: gfs-deb
+    labels:
+      docker.glusterfs: fs
+    privileged: true
+    volumes:
+      - type: bind
+        source: ./hosts
+        target: /etc/hosts
+        read_only: true
+    networks:
+      docker:
+        ipv4_address: 172.16.1.202
+          
+  glusterab:
+    image: gfs-deb
+    labels:
+      docker.glusterfs: fs
+    privileged: true
+    volumes:
+      - type: bind
+        source: ./hosts
+        target: /etc/hosts
+        read_only: true
+    networks:
+      docker:
+        ipv4_address: 172.16.1.200
+
+networks:
+  docker:
+    external:
+      name: docker0
